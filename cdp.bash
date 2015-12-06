@@ -3,7 +3,7 @@ cdp() {
 }
 
 _cdp() {
-  local wd="${COMP_WORDS[COMP_CWORD]:-$(dirname "$(pwd)")}"
+  local wd="${COMP_WORDS[COMP_CWORD]:-$(pwd)}"
   COMPREPLY=( "$(dirname "$wd")" )
   compopt -o nospace
 }
