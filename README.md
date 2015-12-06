@@ -20,6 +20,11 @@ $ cdp /path
 (cd to /path)
 ```
 
+Requirements
+------------
+
+- bash
+
 License
 -------
 
