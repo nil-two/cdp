@@ -25,6 +25,13 @@ Requirements
 
 - bash
 
+Installation
+------------
+
+```sh
+sudo wget https://raw.github.com/kusabashira/cdp/master/cdp.bash -O /etc/bash_completion.d/cdp.bash
+```
+
 License
 -------
 
