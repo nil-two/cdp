@@ -23,6 +23,9 @@ _cdp() {
     '')
       COMPREPLY=( "$(pwd)" )
       ;;
+    /)
+      COMPREPLY=()
+      ;;
     */*)
       COMPREPLY=( "$(dirname "$cur")" )
       ;;
