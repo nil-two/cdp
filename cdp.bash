@@ -1,5 +1,16 @@
 cdp() {
-  cd "${1:-..}"
+  if [[ $# == 0 ]]; then
+    cd ..
+    return
+  fi
+
+  local query="$1"
+  local wd="$(pwd)"
+  local dir="$(echo "$wd" | sed "s#\\(/[^/]*$query[^/]*\\)/.*#\1#")"
+  if [[ $dir != $wd && -d $dir ]]; then
+    cd "$dir"
+    return
+  fi
 }
 
 _cdp() {
