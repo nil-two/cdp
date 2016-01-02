@@ -14,8 +14,18 @@ cdp() {
 }
 
 _cdp() {
-  local wd="${COMP_WORDS[COMP_CWORD]:-$(pwd)}"
-  COMPREPLY=( "$(dirname "$wd")" )
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  case "$cur" in
+    '')
+      COMPREPLY=( "$(pwd)" )
+      ;;
+    */*)
+      COMPREPLY=( "$(dirname "$cur")" )
+      ;;
+    *)
+      COMPREPLY=( "$(pwd | sed "s#\\(/[^/]*$cur[^/]*\\)/.*#\1#")" )
+      ;;
+  esac
   compopt -o nospace
 }
 
