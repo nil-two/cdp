@@ -1,3 +1,8 @@
+__cdp_search_parent_directory() {
+  local query="$1"
+  pwd | sed "s#\(/[^/]*$query[^/]*\)/.*#\1#"
+}
+
 cdp() {
   if [[ $# == 0 ]]; then
     cd ..
@@ -5,9 +10,8 @@ cdp() {
   fi
 
   local query="$1"
-  local wd="$(pwd)"
-  local dir="$(echo "$wd" | sed "s#\\(/[^/]*$query[^/]*\\)/.*#\1#")"
-  if [[ $dir != $wd && -d $dir ]]; then
+  local dir="$(__cdp_search_parent_directory "$query")"
+  if [[ -d $dir && $dir != $(pwd) ]]; then
     cd "$dir"
     return
   fi
@@ -23,7 +27,7 @@ _cdp() {
       COMPREPLY=( "$(dirname "$cur")" )
       ;;
     *)
-      COMPREPLY=( "$(pwd | sed "s#\\(/[^/]*$cur[^/]*\\)/.*#\1#")" )
+      COMPREPLY=( "$(__cdp_search_parent_directory "$cur")" )
       ;;
   esac
   compopt -o nospace
