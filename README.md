@@ -7,6 +7,9 @@ Change the shell working directory to parent directory.
 $ pwd
 /path/to/working/directory
 
+$ cdp to
+(cd to /path/to)
+
 $ cdp
 (cd to /path/to/working)
 
@@ -18,6 +21,11 @@ $ cdp /path/to[TAB]
 ↓
 $ cdp /path
 (cd to /path)
+
+$ cdp to[TAB]
+↓
+$ cdp /path/to
+(cd to /path/to)
 ```
 
 Requirements
