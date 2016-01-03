@@ -25,7 +25,7 @@ _cdp() {
   local cur="${COMP_WORDS[COMP_CWORD]}"
   case "$cur" in
     '')
-      COMPREPLY=( "$(pwd)" )
+      COMPREPLY=( "$(dirname "$(pwd)")" )
       ;;
     /)
       COMPREPLY=()
