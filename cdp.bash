@@ -1,6 +1,10 @@
 __cdp_search_parent_directory() {
   local query="$1"
-  pwd | sed "s#\(/[^/]*$query[^/]*\)/.*#\1#"
+  if [[ $query == '/' ]]; then
+    echo '/'
+    return
+  fi
+  pwd | sed "s#\($query[^/]*/\).*#\1#"
 }
 
 cdp() {
