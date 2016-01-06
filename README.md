@@ -26,6 +26,14 @@ Installation
 sudo wget https://raw.github.com/kusabashira/cdp/master/cdp.bash -O /etc/bash_completion.d/cdp.bash
 ```
 
+Behavior
+---------
+
+Get the directory which match in the left end to the first argument,
+and then cd to the directory.
+
+If no arguments, cd to the parent directory.
+
 License
 -------
 
