@@ -12,20 +12,6 @@ $ cdp to
 
 $ cdp
 (cd to /path/to/working)
-
-$ cdp [TAB]
-↓
-$ cdp /path/to/working[TAB]
-↓
-$ cdp /path/to[TAB]
-↓
-$ cdp /path
-(cd to /path)
-
-$ cdp to[TAB]
-↓
-$ cdp /path/to
-(cd to /path/to)
 ```
 
 Requirements
