@@ -1,5 +1,5 @@
 __cdp_search_parent_directory() {
-  local query="$1"
+  local query=$1
   if [[ $query == '/' ]]; then
     echo '/'
     return
@@ -13,8 +13,8 @@ cdp() {
     return
   fi
 
-  local query="$1"
-  local dir="$(__cdp_search_parent_directory "$query")"
+  local query=$1
+  local dir=$(__cdp_search_parent_directory "$query")
   if [[ -d $dir && $dir != $(pwd) ]]; then
     cd "$dir"
     return
@@ -22,8 +22,8 @@ cdp() {
 }
 
 _cdp() {
-  local cur="${COMP_WORDS[COMP_CWORD]}"
-  case "$cur" in
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  case $cur in
     '')
       COMPREPLY=( "$(dirname "$(pwd)")" )
       ;;
