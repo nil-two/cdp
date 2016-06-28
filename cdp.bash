@@ -4,7 +4,10 @@ __cdp_search_parent_directory() {
     echo "/"
     return
   fi
-  pwd | sed "s#\($query[^/]*/\).*#\1#"
+
+  local wd=$(pwd)
+  [[ $wd =~ ($query[^/]*).* ]]
+  echo "${wd/$BASH_REMATCH/${BASH_REMATCH[1]}}"
 }
 
 cdp() {
