@@ -5,9 +5,8 @@ __cdp_search_parent_directory() {
     return
   fi
 
-  local wd=$(pwd)
-  [[ $wd =~ ($query[^/]*).* ]]
-  echo "${wd/$BASH_REMATCH/${BASH_REMATCH[1]}}"
+  [[ $PWD =~ ($query[^/]*).* ]]
+  echo "${PWD/$BASH_REMATCH/${BASH_REMATCH[1]}}"
 }
 
 cdp() {
@@ -18,7 +17,7 @@ cdp() {
 
   local query=$1
   local dir=$(__cdp_search_parent_directory "$query")
-  if [[ -d $dir && $dir != $(pwd) ]]; then
+  if [[ -d $dir && $dir != $PWD ]]; then
     cd "$dir"
     return
   fi
@@ -28,7 +27,7 @@ _cdp() {
   local cur=${COMP_WORDS[COMP_CWORD]}
   case $cur in
     "")
-      COMPREPLY=( "$(dirname "$(pwd)")" )
+      COMPREPLY=( "$(dirname "$PWD")" )
       ;;
     /)
       COMPREPLY=()
