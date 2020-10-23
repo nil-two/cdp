@@ -23,6 +23,11 @@ check() {
   printf "%s\n" "" > "$stderr"
   printf "%s\n" "0" > "$exitcode"
   "$@" > "$stdout" 2> "$stderr" || printf "%s\n" "$?" > "$exitcode"
+  printf "%s\n" "exitcode: $(cat "$exitcode")"
+  printf "%s\n" "stdout:"
+  cat "$stdout" | sed 's/^/  /'
+  printf "%s\n" "stderr:"
+  cat "$stderr" | sed 's/^/  /'
 }
 
 @test 'cdp: prints usage if no arguments passed' {
