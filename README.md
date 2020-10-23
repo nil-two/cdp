@@ -1,6 +1,8 @@
 cdp
 ===
 
+![CI](https://github.com/kusabashira/cdp/workflows/CI/badge.svg)
+
 Chdir to the parent directory.
 
 ```
