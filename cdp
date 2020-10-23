@@ -1,0 +1,102 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use autouse "File::Basename" => qw(basename);
+
+my $cmd_name;
+if ($^O eq "MSWin32") {
+    $cmd_name = basename($0);
+} else {
+    $cmd_name = $0 =~ s/.*\///r;
+}
+
+my $usage = <<EOF;
+usage:
+  $cmd_name [--] <dir>  # chdir to the directory
+  $cmd_name -w <shell>  # output the wrapper script
+  $cmd_name -h          # print usage
+
+supported-shells:
+  bash
+EOF
+
+sub main {
+    if ((@ARGV == 0) || (@ARGV == 1 && $ARGV[0] eq "--")) {
+        print STDERR $usage;
+        exit 1;
+    }
+    if (($ARGV[0] !~ /^-/) || (@ARGV > 1 && $ARGV[0] eq "--")) {
+        print STDERR <<"        EOF" =~ s/^ {8}//gmr;
+        $cmd_name: shell integration not enabled
+        Please add following line to your shell's rc file.
+
+        command -v $cmd_name > /dev/null && eval "\$($cmd_name -w bash)"
+
+        EOF
+        exit 1;
+    }
+
+    my $mode = shift @ARGV;
+
+    if ($mode eq "-w") {
+
+        if (@ARGV < 1) {
+            print STDERR "$cmd_name: $mode: no input shell\n";
+            exit 1;
+        }
+
+        my $shell = $ARGV[0];
+        if ($shell eq "bash") {
+            print <<"            EOF" =~ s/^ {12}//gmr;
+            cdp() {
+                if [[ \$# -eq 0 || ( \$# -eq 1 && \$1 = -- ) || ( \$# -ge 1 && \$1 = -* && \$1 != -- ) ]]; then
+                    \\cdp "\$@"
+                    return
+                fi
+
+                if [[ \$1 = -- ]]; then
+                    shift
+                fi
+                cd "\$@"
+            }
+
+            _cdp() {
+                local cur=\${COMP_WORDS[COMP_CWORD]}
+
+                local defaultIFS=\$' \\t\\n'
+                local IFS=\$defaultIFS
+
+                case \$cur in
+                    */*)
+                        IFS=\$'\\n'; COMPREPLY=( \$(dirname "\$cur") ); IFS=\$defaultIFS
+                        type compopt &> /dev/null && compopt -o filenames 2> /dev/null || compgen -f /non-existing-dir/ >/dev/null
+                        ;;
+                    "")
+                        IFS=\$'\\n'; COMPREPLY=( \$(dirname "\$PWD") ); IFS=\$defaultIFS
+                        type compopt &> /dev/null && compopt -o filenames 2> /dev/null || compgen -f /non-existing-dir/ >/dev/null
+                        ;;
+                esac
+            }
+            complete -F _cdp cdp
+            EOF
+        } else {
+            print STDERR "$cmd_name: $mode: $shell doesn't supported\n";
+            exit 1;
+        }
+
+    } elsif ($mode eq "-h") {
+
+        print $usage;
+
+    } else {
+
+        print STDERR <<"        EOF" =~ s/^ {8}//gmr;
+        $cmd_name: unrecognized mode '$mode'
+        Try '$cmd_name -h' for more information.
+        EOF
+        exit 1;
+
+    }
+}
+
+main;

@@ -1,38 +1,94 @@
 cdp
 ===
 
-Change the shell working directory to parent directory.
+Chdir to the parent directory.
 
 ```
 $ pwd
 /path/to/working/directory
 
-$ cdp to
-(cd to /path/to)
+$ cdp <TAB>
+$ cdp /path/to/working<TAB>
+$ cdp /path/to<TAB>
+$ cdp /path
+(cd to /path)
+```
 
-$ cdp
-(cd to /path/to/working)
+Usage
+-----
+
+```
+usage:
+  cdp [--] <dir>  # chdir to the directory
+  cdp -w <shell>  # output the wrapper script
+  cdp -h          # print usage
+
+supported-shells:
+  bash
 ```
 
 Requirements
 ------------
 
-- bash
+- Perl (5.14.0 or later)
 
 Installation
 ------------
 
-```sh
-sudo wget https://raw.github.com/kusabashira/cdp/master/cdp.bash -O /etc/bash_completion.d/cdp.bash
+1. Copy `cdp` into your `$PATH`.
+2. Make `cdp` executable.
+3. Add following config to your shell's rc file.
+
+| Shell |                       |
+|-------|-----------------------|
+| Bash  | eval "$(cdp -w bash)" |
+
+### Example
+
+```
+$ curl -L https://raw.githubusercontent.com/kusabashira/cdp/master/cdp > ~/bin/cdp
+$ chmod +x ~/bin/cdp
+$ echo 'eval "$(cdp -w bash)"' >> ~/.bashrc
 ```
 
-Behavior
----------
+Note: In this example, `$HOME/bin` must be included in `$PATH`.
 
-Get the directory which match in the left end to the first argument,
-and then cd to the directory.
+Commands
+--------
 
-If no arguments, cd to the parent directory.
+### cdp [--] \<directory\>
+
+Chdir to the directory.
+
+```
+$ cdf /path/to/working
+(Chdir to /path/to/working)
+
+$ cdf /path
+(Chdir to /path)
+```
+
+### cdf -w \<shell\>
+
+Output the wrapper script.
+
+Supported shells are as follows:
+
+- bash
+
+```
+$ eval "$(cdf -w bash)"
+(Enable the shell integration for bash)
+```
+
+### cdf -h
+
+Print usage.
+
+```
+$ cdf -h
+(Print usage)
+```
 
 License
 -------
@@ -42,4 +98,4 @@ MIT License
 Author
 ------
 
-kusabashira <kusabashira227@gmail.com>
+nil2 <nil2@nil2.org>
