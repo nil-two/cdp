@@ -63,14 +63,14 @@ Commands
 Chdir to the directory.
 
 ```
-$ cdf /path/to/working
+$ cdp /path/to/working
 (Chdir to /path/to/working)
 
-$ cdf /path
+$ cdp /path
 (Chdir to /path)
 ```
 
-### cdf -w \<shell\>
+### cdp -w \<shell\>
 
 Output the wrapper script.
 
@@ -79,16 +79,16 @@ Supported shells are as follows:
 - bash
 
 ```
-$ eval "$(cdf -w bash)"
+$ eval "$(cdp -w bash)"
 (Enable the shell integration for bash)
 ```
 
-### cdf -h
+### cdp -h
 
 Print usage.
 
 ```
-$ cdf -h
+$ cdp -h
 (Print usage)
 ```
 
