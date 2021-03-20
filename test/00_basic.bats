@@ -7,15 +7,11 @@ readonly stderr=$BATS_TEST_DIRNAME/../tmp/stderr
 readonly exitcode=$BATS_TEST_DIRNAME/../tmp/exitcode
 
 setup() {
-  if [[ $BATS_TEST_NUMBER == 1 ]]; then
-    mkdir -p -- "$tmpdir"
-  fi
+  mkdir -p -- "$tmpdir"
 }
 
 teardown() {
-  if [[ ${#BATS_TEST_NAMES[@]} == $BATS_TEST_NUMBER ]]; then
-    rm -rf -- "$tmpdir"
-  fi
+  rm -rf -- "$tmpdir"
 }
 
 check() {
@@ -23,11 +19,6 @@ check() {
   printf "%s\n" "" > "$stderr"
   printf "%s\n" "0" > "$exitcode"
   "$@" > "$stdout" 2> "$stderr" || printf "%s\n" "$?" > "$exitcode"
-  printf "%s\n" "exitcode: $(cat "$exitcode")"
-  printf "%s\n" "stdout:"
-  cat "$stdout" | sed 's/^/  /'
-  printf "%s\n" "stderr:"
-  cat "$stderr" | sed 's/^/  /'
 }
 
 @test 'cdp: prints usage if no arguments passed' {
