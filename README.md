@@ -1,7 +1,7 @@
 cdp
 ===
 
-![CI](https://github.com/nil2nekoni/cdp/workflows/CI/badge.svg)
+![CI](https://github.com/nil-two/cdp/workflows/CI/badge.svg)
 
 Chdir to the parent directory.
 
@@ -48,7 +48,7 @@ Installation
 ### Example
 
 ```
-$ curl -L https://raw.githubusercontent.com/nil2nekoni2/cdp/master/cdp > ~/bin/cdp
+$ curl -L https://raw.githubusercontent.com/nil-two/cdp/master/cdp > ~/bin/cdp
 $ chmod +x ~/bin/cdp
 $ echo 'eval "$(cdp -w bash)"' >> ~/.bashrc
 ```
